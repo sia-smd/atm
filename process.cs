@@ -34,19 +34,44 @@ namespace atm
         static List<card> list_card = new List<card>();
         static List<card_history> history_card = new List<card_history>();
         int i = 1;
+        bool ck;
         static string card_no;
 
         // vared kardan 2 card baraye rah andazi ATM
         public void add()
         {
+            Console.Clear();
             System.Console.WriteLine("add 2 card for run ATM");
+
             do
             {
                 card c = new card();
                 System.Console.WriteLine("enter card name-#" + i);
                 c.name = ATM.getstring();
                 System.Console.WriteLine("enter card number-#" + i);
-                c.id = ATM.getstring();
+                if (i == 2)
+                {
+                    do
+                    {
+                        c.id = ATM.getstring();
+                        foreach (var item in list_card)
+                        {
+                            if (item.id == c.id)
+                            {
+                                System.Console.WriteLine("This is a duplicate card number enter another card number :");
+                                ck = true;
+                            }
+                            else
+                            {
+                                ck = false;
+                            }
+                        }
+                    } while (ck == true);
+                }
+                else
+                {
+                    c.id = ATM.getstring();
+                }
                 System.Console.WriteLine("enter card password-#" + i);
                 c.pass = ATM.getstring();
                 System.Console.WriteLine("enter card credit ($)-#" + i);
@@ -196,7 +221,7 @@ namespace atm
             Console.Clear();
             System.Console.WriteLine("--------------WELCOME--------------" + "\n" + "\n");
             System.Console.Write("        enter card number :");
-            card_no=ATM.getstring();
+            card_no = ATM.getstring();
             System.Console.WriteLine();
             System.Console.Write(" enter password (password is hide):");
             string password = ATM.GetPassword();
