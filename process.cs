@@ -89,9 +89,7 @@ namespace atm
             // {
             //     if (item.id == card_no)
             //     {
-            //         Console.Clear();
-            //         System.Console.WriteLine("Your account balance : " + item.price + " $");
-            //         Console.ReadKey();
+            //         sql
             //     }
             // }
             var item = (from n in list_card where n.id == card_no select n.price).First();
@@ -112,47 +110,58 @@ namespace atm
             string re_pass = ATM.getstring();
 
 
-            // foreach (var item in list_card)
-            // {
-            //     if (item.id == card_no)
-            //     {
-            //         Console.Clear();
-            //         if (item.pass == old_pass)
-            //         {
-            //             if (new_pass == re_pass)
-            //             {
-            //                 item.pass = new_pass;
-            //                 System.Console.WriteLine("success");
-            //             }
-            //             else
-            //             {
-            //                 System.Console.WriteLine("wrong new pass");
-            //             }
-            //         }
-            //         else
-            //         {
-            //             System.Console.WriteLine("wrong old pass");
-            //         }
-            //         Console.ReadKey();
-            //     }
-            // }
-            var item = (from n in list_card where n.id == card_no && n.pass == old_pass select n).Any();
-            if (item == true && new_pass == re_pass)
+            foreach (var item in list_card)
             {
-                foreach (var item1 in list_card)
+                if (item.id == card_no)
                 {
-                    if (item1.id == card_no)
+                    Console.Clear();
+                    if (item.pass == old_pass)
                     {
-                        item1.pass = new_pass;
-                        System.Console.WriteLine("success");
+                        if (new_pass == re_pass)
+                        {
+                            item.pass = new_pass;
+                            System.Console.WriteLine("success");
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("wrong new pass");
+                        }
                     }
+                    else
+                    {
+                        System.Console.WriteLine("wrong old pass");
+                    }
+                    Console.ReadKey();
                 }
             }
-            else
-            {
-                System.Console.WriteLine("faild");
-            }
-            Console.ReadKey();
+
+            // // linq
+            // var item = (from n in list_card where n.id == card_no && n.pass == old_pass select n).Any();
+
+            // // lambda
+            // var iteml=list_card.Any( a=> a.id==card_no && a.pass==old_pass);
+
+            // if (iteml==true && new_pass==old_pass)
+            // {
+                
+            // }
+
+            // if (item == true && new_pass == re_pass)
+            // {
+            //     foreach (var item1 in list_card)
+            //     {
+            //         if (item1.id == card_no)
+            //         {
+            //             item1.pass = new_pass;
+            //             System.Console.WriteLine("success");
+            //         }
+            //     }
+            // }
+            // else
+            // {
+            //     System.Console.WriteLine("faild");
+            // }
+            // Console.ReadKey();
         }
 
         // daryaft pool az ATM
@@ -285,6 +294,9 @@ namespace atm
             }
             System.Console.WriteLine("--------------------------------------------------*");
             Console.ReadKey();
+
+        //    var iteml=history_card.Where( a => a.id==card_no).TakeLast(10).ToList();
+        //    iteml.ForEach( a => System.Console.WriteLine(a.id));
         }
 
         //  log tarakonesh card
