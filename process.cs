@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace atm
@@ -84,15 +85,19 @@ namespace atm
         // sorat hesab
         public void credit()
         {
-            foreach (var item in list_card)
-            {
-                if (item.id == card_no)
-                {
-                    Console.Clear();
-                    System.Console.WriteLine("Your account balance : " + item.price + " $");
-                    Console.ReadKey();
-                }
-            }
+            // foreach (var item in list_card)
+            // {
+            //     if (item.id == card_no)
+            //     {
+            //         Console.Clear();
+            //         System.Console.WriteLine("Your account balance : " + item.price + " $");
+            //         Console.ReadKey();
+            //     }
+            // }
+            var item = (from n in list_card where n.id == card_no select n.price).First();
+            Console.Clear();
+            System.Console.WriteLine("Your account balance : " + item + " $");
+            Console.ReadKey();
         }
 
         // taghir ramz card
@@ -107,30 +112,47 @@ namespace atm
             string re_pass = ATM.getstring();
 
 
-            foreach (var item in list_card)
+            // foreach (var item in list_card)
+            // {
+            //     if (item.id == card_no)
+            //     {
+            //         Console.Clear();
+            //         if (item.pass == old_pass)
+            //         {
+            //             if (new_pass == re_pass)
+            //             {
+            //                 item.pass = new_pass;
+            //                 System.Console.WriteLine("success");
+            //             }
+            //             else
+            //             {
+            //                 System.Console.WriteLine("wrong new pass");
+            //             }
+            //         }
+            //         else
+            //         {
+            //             System.Console.WriteLine("wrong old pass");
+            //         }
+            //         Console.ReadKey();
+            //     }
+            // }
+            var item = (from n in list_card where n.id == card_no && n.pass == old_pass select n).Any();
+            if (item == true && new_pass == re_pass)
             {
-                if (item.id == card_no)
+                foreach (var item1 in list_card)
                 {
-                    Console.Clear();
-                    if (item.pass == old_pass)
+                    if (item1.id == card_no)
                     {
-                        if (new_pass == re_pass)
-                        {
-                            item.pass = new_pass;
-                            System.Console.WriteLine("success");
-                        }
-                        else
-                        {
-                            System.Console.WriteLine("wrong new pass");
-                        }
+                        item1.pass = new_pass;
+                        System.Console.WriteLine("success");
                     }
-                    else
-                    {
-                        System.Console.WriteLine("wrong old pass");
-                    }
-                    Console.ReadKey();
                 }
             }
+            else
+            {
+                System.Console.WriteLine("faild");
+            }
+            Console.ReadKey();
         }
 
         // daryaft pool az ATM
@@ -159,6 +181,8 @@ namespace atm
                     Console.ReadKey();
                 }
             }
+
+
         }
 
         // card be card kardan
