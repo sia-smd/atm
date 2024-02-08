@@ -7,7 +7,7 @@ namespace atm
     {
         static void Main(string[] args)
         {
-            int add = 0;
+            int input = 0;
             process pro = new process();
 
             // vared kardane card
@@ -30,9 +30,9 @@ namespace atm
                 do
                 {
 
-                    add = ATM.menu();
+                    input = pro.menu();
 
-                    switch (add)
+                    switch (input)
                     {
                         case 1:
                             pro.credit();
@@ -56,8 +56,8 @@ namespace atm
                             break;
                     }
 
-                } while (add == 1 || add == 2 || add == 3 || add == 4 || add == 5);
-            } while (add == 6);
+                } while (input == 1 || input == 2 || input == 3 || input == 4 || input == 5);
+            } while (input == 6);
             Console.Clear();
             System.Console.WriteLine("        *------tank you------*");
         }

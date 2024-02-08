@@ -5,39 +5,49 @@ using System.Linq;
 
 namespace atm
 {
-    interface atm
-    {
-        void add();
-        bool select();
-        void CtoC();
-        void update();
-        void credit();
-        void cash();
-        void add_history(string id, int price, string type);
-        void history();
-    }
-    class card
-    {
-        public string id;
-        public string name;
-        public int price;
-        public string pass;
-    }
-    class card_history
-    {
-        public string id;
-        public int price;
-        public DateTime date;
-        public string type;
-    }
     class process : atm
     {
         static List<card> list_card = new List<card>();
         static List<card_history> history_card = new List<card_history>();
         int i = 1;
         bool ck;
-        static string card_no;
+        string card_no;
 
+        helper helper = new helper();
+
+    // sakht menu
+    public int menu()
+        {
+            
+
+            Console.Clear();
+            System.Console.WriteLine("*--------------ATM menu--------------*");
+            System.Console.WriteLine("*                                    *");
+            System.Console.WriteLine("*1-acount balance   change password-2*");
+            System.Console.WriteLine("*                                    *");
+            System.Console.WriteLine("*3-card to card       withdrow cash-4*");
+            System.Console.WriteLine("*                                    *");
+            System.Console.WriteLine("*5-last ten round                    *");
+            System.Console.WriteLine("*                                    *");
+            System.Console.WriteLine("*6-try another card            exit-7*");
+            System.Console.WriteLine("*------------------------------------*");
+            System.Console.Write("Select the desired option :");
+            int add = helper.ck2("enter correct option number");
+            return add;
+        }
+
+        public  string GetPassword()
+        {
+            string password = null;
+            while (true)
+            {
+                var key = System.Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                    break;
+                password += key.KeyChar;
+            }
+            return password;
+        }
         // vared kardan 2 card baraye rah andazi ATM
         public void add()
         {
@@ -48,13 +58,13 @@ namespace atm
             {
                 card c = new card();
                 System.Console.WriteLine("enter card name-#" + i);
-                c.name = ATM.getstring();
+                c.name = helper.getstring();
                 System.Console.WriteLine("enter card number-#" + i);
                 if (i == 2)
                 {
                     do
                     {
-                        c.id = ATM.getstring();
+                        c.id = helper.getstring();
                         foreach (var item in list_card)
                         {
                             if (item.id == c.id)
@@ -71,12 +81,12 @@ namespace atm
                 }
                 else
                 {
-                    c.id = ATM.getstring();
+                    c.id = helper.getstring();
                 }
                 System.Console.WriteLine("enter card password-#" + i);
-                c.pass = ATM.getstring();
+                c.pass = helper.getstring();
                 System.Console.WriteLine("enter card credit ($)-#" + i);
-                c.price = ATM.ck1("enter correct amount");
+                c.price = helper.ck1("enter correct amount");
                 list_card.Add(c);
                 i++;
             } while (i < 3);
@@ -103,11 +113,11 @@ namespace atm
         {
             Console.Clear();
             System.Console.Write("enter old password : ");
-            string old_pass = ATM.getstring();
+            string old_pass = helper.getstring();
             System.Console.Write("enter new password : ");
-            string new_pass = ATM.getstring();
+            string new_pass = helper.getstring();
             System.Console.Write("repeat new password : ");
-            string re_pass = ATM.getstring();
+            string re_pass = helper.getstring();
 
 
             foreach (var item in list_card)
@@ -169,7 +179,7 @@ namespace atm
         {
             Console.Clear();
             System.Console.Write("Enter the desired amount : ");
-            int cash = ATM.ck1("enter correct amount");
+            int cash = helper.ck1("enter correct amount");
 
             foreach (var item in list_card)
             {
@@ -199,9 +209,9 @@ namespace atm
         {
             Console.Clear();
             System.Console.Write("enter Destination card : ");
-            string des_card = ATM.getstring();
+            string des_card = helper.getstring();
             System.Console.Write("Enter the amount to transfer : ");
-            int cash = ATM.ck1("enter correct amount");
+            int cash = helper.ck1("enter correct amount");
 
             foreach (var item in list_card)
             {
@@ -254,10 +264,10 @@ namespace atm
             Console.Clear();
             System.Console.WriteLine("--------------WELCOME--------------" + "\n" + "\n");
             System.Console.Write("        enter card number :");
-            card_no = ATM.getstring();
+            card_no = helper.getstring();
             System.Console.WriteLine();
             System.Console.Write(" enter password (password is hide):");
-            string password = ATM.GetPassword();
+            string password = GetPassword();
             foreach (var item in list_card)
             {
                 if (item.id == card_no && item.pass == password)
@@ -287,7 +297,7 @@ namespace atm
                 {
                     var s = item.price;
                     System.Console.Write("*-" + i + "    " + item.price);
-                    ATM.space(item.price);
+                    helper.space(item.price);
                     System.Console.WriteLine(item.date + "   " + item.type);
                     i++;
                 }
